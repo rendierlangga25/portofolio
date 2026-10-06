@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portofolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--tx:#14213d;--mu:#5b6478;--ac:#0f766e;--ac2:#e6f4f2;--bd:#e4e7ee;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1420;--card:#171f2e;--tx:#eef1f7;--mu:#9aa5bb;--ac:#2dd4bf;--ac2:#12302f;--bd:#26314a}}
+:root[data-theme="dark"]{--bg:#0e1420;--card:#171f2e;--tx:#eef1f7;--mu:#9aa5bb;--ac:#2dd4bf;--ac2:#12302f;--bd:#26314a}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.65}
+.w{max-width:1040px;margin:0 auto;padding:0 22px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd)}
+nav .w{display:flex;justify-content:space-between;align-items:center;height:56px}
+nav b{font-weight:800}nav a{color:var(--mu);text-decoration:none;font-size:14px;margin-left:18px;font-weight:600}nav a:hover{color:var(--ac)}
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;padding:72px 0 56px}
+.tag{display:inline-block;background:var(--ac2);color:var(--ac);font-weight:600;font-size:13px;padding:5px 14px;border-radius:99px}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.1;margin:16px 0 8px;font-weight:800;letter-spacing:-.02em}
+.role{font-size:20px;color:var(--ac);font-weight:600;margin:0 0 14px}.lead{color:var(--mu);max-width:520px}
+.btn{display:inline-block;border:0;cursor:pointer;font:600 15px inherit;font-family:inherit;padding:12px 22px;border-radius:12px;background:var(--ac);color:#fff;text-decoration:none}
+.btn.o{background:transparent;color:var(--tx);border:1px solid var(--bd)}.row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.ph{aspect-ratio:1;border-radius:28px;background:linear-gradient(135deg,var(--ac),#3b82f6);overflow:hidden;position:relative;display:grid;place-items:center;color:#fff;font-size:64px;font-weight:800;box-shadow:0 20px 50px -20px rgba(15,118,110,.5)}
+.ph img,.pc .im img{width:100%;height:100%;object-fit:cover;display:block}
+section{padding:56px 0}h2{font-size:28px;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}.sub{color:var(--mu);margin:0 0 28px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}.chip{background:var(--card);border:1px solid var(--bd);padding:8px 16px;border-radius:99px;font-weight:600;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.pc:hover{transform:translateY(-4px);box-shadow:0 16px 36px -18px rgba(0,0,0,.35)}
+.pc .im{aspect-ratio:16/10;background:linear-gradient(135deg,var(--ac2),var(--bd));position:relative;display:grid;place-items:center;color:var(--mu);font-size:13px}
+.pc .bd{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}.pc h3{margin:0;font-size:18px}.pc p{margin:0;color:var(--mu);font-size:14.5px}
+.tg{font-size:12px;color:var(--ac);font-weight:600}.pc a{color:var(--ac);font-weight:600;font-size:14px;text-decoration:none;margin-top:auto}
+.ct{background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:40px;text-align:center}
+footer{text-align:center;color:var(--mu);font-size:13px;padding:30px 0 90px}
+.up{position:absolute;inset:auto 10px 10px auto;background:rgba(0,0,0,.65);color:#fff;border:0;border-radius:10px;padding:7px 12px;font:600 12px inherit;font-family:inherit;cursor:pointer}
+.ed [contenteditable]{outline:2px dashed color-mix(in srgb,var(--ac) 55%,transparent);outline-offset:3px;border-radius:4px;min-height:1em}
+.bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9;background:var(--tx);color:var(--bg);padding:8px;border-radius:16px;display:flex;gap:8px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:94vw;flex-wrap:wrap;justify-content:center}
+.bar .btn{padding:9px 16px;font-size:14px}.bar .btn.o{color:var(--bg);border-color:rgba(255,255,255,.3)}.bar span{font-size:13px;padding:0 8px}
+.del{position:absolute;top:10px;right:10px;background:#dc2626;color:#fff;border:0;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer}
+@media(max-width:720px){.hero{grid-template-columns:1fr;padding-top:40px}.ph{max-width:280px;order:-1}nav a:not(:last-child){display:none}.ct{padding:28px 18px}}
+</style></head>
+<body><div id="app"></div>
+<script id="state" type="application/json">{"name":"Nama Lengkap Kamu","title":"Posisi / Bidang Keahlian","tagline":"Profesional yang berorientasi pada hasil, teliti, dan senang belajar hal baru. Saya membantu tim bekerja lebih efisien lewat solusi yang rapi dan terukur.","about":"Tulis ringkasan singkat tentang dirimu: latar belakang pendidikan, pengalaman kerja, nilai yang kamu pegang, dan apa yang kamu cari di karier berikutnya. Cukup 3-4 kalimat agar mudah dibaca HRD.","photo":"","email":"email@kamu.com","link":"https://linkedin.com/in/username","skills":["Komunikasi","Analisis Data","Microsoft Excel","Manajemen Waktu","Kerja Tim"],"projects":[{"t":"Judul Proyek Pertama","d":"Jelaskan masalah yang dipecahkan, peran kamu, dan hasil nyata (angka jika ada).","tags":"Excel, Otomasi","img":"","url":""},{"t":"Judul Proyek Kedua","d":"Deskripsi singkat proyek: tujuan, alat yang dipakai, dan dampaknya.","tags":"Web, Dashboard","img":"","url":""}]}</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL="https://lponvuerfhczarmqkyak.supabase.co";
+const SUPABASE_KEY="sb_publishable_Ygby3PmVu7p99ZjHe2oRLQ_c48JeIit";
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let S=JSON.parse(document.getElementById('state').textContent);
+let edit=false,art=null,can=false,msg='';
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const T=(p,v,tag='span',cls='')=>`<${tag} class="${cls}" data-p="${p}" ${edit?'contenteditable="true"':''}>${esc(v)}</${tag}>`;
+function setP(p,v){const k=p.split('.');let o=S;for(let i=0;i<k.length-1;i++)o=o[k[i]];o[k[k.length-1]]=v}
+function render(){
+const initial=(S.name||'?').trim()[0]||'?';
+const skills=edit?T('skills',S.skills.join(', '),'div','chips'):S.skills.map(s=>`<span class="chip">${esc(s)}</span>`).join('');
+const pr=S.projects.map((p,i)=>`<article class="pc"><div class="im">${p.img?`<img src="${p.img}" alt="">`:'Foto proyek'}${edit?`<button class="up" data-up="projects.${i}.img">Ganti foto</button><button class="del" data-del="${i}">Hapus</button>`:''}</div><div class="bd">${T(`projects.${i}.tags`,p.tags,'div','tg')}${T(`projects.${i}.t`,p.t,'h3')}${T(`projects.${i}.d`,p.d,'p')}${edit?`<div class="tg">Link: ${T(`projects.${i}.url`,p.url||'','span')}</div>`:(p.url?`<a href="${esc(p.url)}" target="_blank" rel="noopener">Lihat proyek →</a>`:'')}</div></article>`).join('');
+$('#app').className=edit?'ed':'';
+$('#app').innerHTML=`<nav><div class="w"><b>${esc(S.name.split(' ')[0])}<span style="color:var(--ac)">.</span></b><div><a href="#tentang">Tentang</a><a href="#skill">Keahlian</a><a href="#proyek">Proyek</a><a href="#kontak">Kontak</a></div></div></nav>
+<main class="w"><div class="hero"><div><span class="tag">Terbuka untuk peluang kerja</span><h1>${T('name',S.name)}</h1><p class="role">${T('title',S.title)}</p><p class="lead">${T('tagline',S.tagline)}</p><div class="row"><a class="btn" href="#proyek">Lihat Proyek</a><a class="btn o" href="#kontak">Hubungi Saya</a></div></div>
+<div class="ph">${S.photo?`<img src="${S.photo}" alt="Foto profil">`:esc(initial)}${edit?`<button class="up" data-up="photo">Ganti foto</button>`:''}</div></div>
+<section id="tentang"><h2>Tentang Saya</h2><p class="sub">Sekilas tentang siapa saya</p><p style="max-width:720px;color:var(--mu)">${T('about',S.about)}</p></section>
+<section id="skill"><h2>Keahlian</h2><p class="sub">${edit?'Pisahkan dengan koma':'Kemampuan utama yang saya bawa'}</p><div class="chips">${skills}</div></section>
+<section id="proyek"><h2>Proyek</h2><p class="sub">Karya dan pencapaian pilihan</p><div class="grid">${pr}</div></section>
+<section id="kontak"><div class="ct"><h2>Mari Berdiskusi</h2><p class="sub">Saya siap untuk wawancara dan kesempatan baru.</p><div class="row" style="justify-content:center">${edit?`<span>Email: ${T('email',S.email)}</span><span>Link: ${T('link',S.link)}</span>`:`<a class="btn" href="mailto:${esc(S.email)}">${esc(S.email)}</a>${S.link?`<a class="btn o" href="${esc(S.link)}" target="_blank" rel="noopener">LinkedIn</a>`:''}`}</div></div></section></main>
+<footer>© ${new Date().getFullYear()} ${esc(S.name)}${can?'':' · <a href="#" id="lg" style="color:inherit;opacity:.5">Admin</a>'}</footer>
+${can?`<div class="bar">${edit?`<button class="btn o" id="add">+ Proyek</button><button class="btn" id="sv">Simpan &amp; Publish</button><button class="btn o" id="ex">Batal</button>`:`<button class="btn" id="ed">✎ Edit Portofolio</button><button class="btn o" id="lo">Keluar</button>`}${msg?`<span>${esc(msg)}</span>`:''}</div>`:''}`;
+}
+document.addEventListener('input',e=>{const p=e.target.dataset&&e.target.dataset.p;if(!p||!edit)return;const v=e.target.textContent;if(p==='skills')S.skills=v.split(',').map(s=>s.trim()).filter(Boolean);else setP(p,v)});
+function pick(cb){const f=document.createElement('input');f.type='file';f.accept='image/*';f.onchange=()=>{const file=f.files[0];if(!file)return;const im=new Image();im.onload=()=>{const m=cb.max,r=Math.min(1,m/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=im.width*r;c.height=im.height*r;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>cb.done(b),'image/jpeg',.82)};im.src=URL.createObjectURL(file)};f.click()}
+document.addEventListener('click',async e=>{
+const t=e.target;
+if(t.dataset.up){const key=t.dataset.up;pick({max:key==='photo'?700:1000,done:async b=>{msg='Mengunggah…';render();const path=Date.now()+'.jpg';const {error}=await sb.storage.from('portfolio').upload(path,b,{contentType:'image/jpeg'});if(error){msg='Gagal upload: '+error.message;render();return}setP(key,sb.storage.from('portfolio').getPublicUrl(path).data.publicUrl);msg='';render()}})}
+else if(t.dataset.del!==undefined){if(confirm('Hapus proyek ini?')){S.projects.splice(+t.dataset.del,1);render()}}
+else if(t.id==='ed'){edit=true;msg='';render()}
+else if(t.id==='ex'){location.reload()}
+else if(t.id==='add'){S.projects.push({t:'Judul Proyek Baru',d:'Deskripsi singkat proyek.',tags:'Tag',img:'',url:''});render();scrollTo({top:document.body.scrollHeight,behavior:'smooth'})}
+else if(t.id==='sv'){msg='Menyimpan…';render();const {error}=await sb.from('portfolio').upsert({id:1,data:S});msg=error?'Gagal: '+error.message:'Tersimpan ✓';if(!error)edit=false;render()}
+else if(t.id==='lo'){await sb.auth.signOut();location.reload()}
+else if(t.id==='lg'){e.preventDefault();const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20;display:grid;place-items:center';d.innerHTML='<div class="ct" style="max-width:340px;width:90%"><h2 style="font-size:22px">Login Admin</h2><input id="em" type="email" placeholder="Email" style="width:100%;padding:11px;margin:6px 0;border-radius:10px;border:1px solid var(--bd)"><input id="pw" type="password" placeholder="Password" style="width:100%;padding:11px;margin:6px 0;border-radius:10px;border:1px solid var(--bd)"><p id="er" style="color:#dc2626;font-size:13px;margin:4px 0"></p><button class="btn" id="go">Masuk</button> <button class="btn o" id="cx">Batal</button></div>';document.body.appendChild(d);d.querySelector('#cx').onclick=()=>d.remove();d.querySelector('#go').onclick=async()=>{const {error}=await sb.auth.signInWithPassword({email:d.querySelector('#em').value,password:d.querySelector('#pw').value});if(error)d.querySelector('#er').textContent='Email atau password salah';else location.reload()}}
+});
+(async()=>{try{const {data:ss}=await sb.auth.getSession();can=!!ss.session;const {data}=await sb.from('portfolio').select('data').eq('id',1).maybeSingle();if(data&&data.data)S=data.data}catch(e){}render()})();
+</script></body></html>
