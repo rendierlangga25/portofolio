@@ -1,8 +1,8 @@
 import {useState} from 'react'
 import {NavLink,Outlet,useNavigate} from 'react-router-dom'
-import {Briefcase,FileText,FolderKanban,GraduationCap,LayoutDashboard,Link2,LogOut,Mail,Menu,Phone,Settings,User,Wrench,X,ExternalLink} from 'lucide-react'
+import {Award,Briefcase,FileText,FolderKanban,GraduationCap,LayoutDashboard,Link2,LogOut,Mail,Menu,Phone,Settings,User,Wrench,X,ExternalLink} from 'lucide-react'
 import {sb} from '../lib/supabase'
-const items=[['/admin','Dashboard',LayoutDashboard],['/admin/profile','Profile',User],['/admin/about','About',FileText],['/admin/experience','Experience',Briefcase],['/admin/projects','Projects',FolderKanban],['/admin/skills','Skills',Wrench],['/admin/education','Education',GraduationCap],['/admin/contact','Contact',Phone],['/admin/social','Social Links',Link2],['/admin/settings','Site Settings',Settings],['/admin/messages','Messages',Mail]]
+const items=[['/admin','Dashboard',LayoutDashboard],['/admin/profile','Profile',User],['/admin/about','About',FileText],['/admin/experience','Experience',Briefcase],['/admin/projects','Projects',FolderKanban],['/admin/certificates','Certificates',Award],['/admin/skills','Skills',Wrench],['/admin/education','Education',GraduationCap],['/admin/contact','Contact',Phone],['/admin/social','Social Links',Link2],['/admin/settings','Site Settings',Settings],['/admin/messages','Messages',Mail]]
 export default function AdminLayout(){
   const [open,setOpen]=useState(false),nav=useNavigate()
   const out=async()=>{await sb.auth.signOut();nav('/admin/login')}

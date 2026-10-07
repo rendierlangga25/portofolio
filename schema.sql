@@ -13,7 +13,7 @@ create table profiles (id uuid primary key default gen_random_uuid(), created_at
   name text, headline text, hero_title text, hero_subtitle text, bio text, location text, email text, whatsapp text,
   avatar_url text, cv_url text, education_text text, focus_text text, stats jsonb default '[]', contact_title text);
 create table site_settings (id uuid primary key default gen_random_uuid(), created_at timestamptz default now(), updated_at timestamptz default now(),
-  site_title text, meta_description text, og_image_url text, favicon_url text, logo_text text default 'RE', accent_color text default '#e2561b', footer_text text);
+  site_title text, meta_description text, og_image_url text, favicon_url text, logo_text text default 'RE', accent_color text default '#e2561b', footer_text text, bg_color text, card_color text, text_color text, dark_color text, nav_color text, navtext_color text);
 create table experiences (id uuid primary key default gen_random_uuid(), created_at timestamptz default now(), updated_at timestamptz default now(),
   company text, role text, period text, bullets text, sort_order int default 0, published boolean default true);
 create table projects (id uuid primary key default gen_random_uuid(), created_at timestamptz default now(), updated_at timestamptz default now(),
@@ -29,11 +29,13 @@ create table education (id uuid primary key default gen_random_uuid(), created_a
   institution text, degree text, field text, start_year text, end_year text, description text, logo_url text, sort_order int default 0, published boolean default true);
 create table social_links (id uuid primary key default gen_random_uuid(), created_at timestamptz default now(), updated_at timestamptz default now(),
   platform text, url text, sort_order int default 0, published boolean default true);
+create table certificates (id uuid primary key default gen_random_uuid(), created_at timestamptz default now(), updated_at timestamptz default now(),
+  title text, issuer text, issued_at text, description text, image_url text, credential_url text, published boolean default true, sort_order int default 0);
 create table contact_messages (id uuid primary key default gen_random_uuid(), created_at timestamptz default now(), updated_at timestamptz default now(),
   name text not null, email text not null, message text not null, is_read boolean default false);
 
 do $$ declare t text; begin
-  foreach t in array array['profiles','site_settings','experiences','projects','project_images','skill_categories','skills','education','social_links','contact_messages'] loop
+  foreach t in array array['profiles','site_settings','experiences','projects','project_images','skill_categories','skills','education','social_links','certificates','contact_messages'] loop
     execute format('alter table %I enable row level security', t);
     execute format('create policy "admin penuh" on %I for all to authenticated using (is_admin()) with check (is_admin())', t);
     execute format('create trigger set_updated before update on %I for each row execute function set_updated_at()', t);
@@ -41,7 +43,7 @@ do $$ declare t text; begin
   foreach t in array array['profiles','site_settings','project_images','skill_categories','skills'] loop
     execute format('create policy "publik baca" on %I for select using (true)', t);
   end loop;
-  foreach t in array array['experiences','projects','education','social_links'] loop
+  foreach t in array array['experiences','projects','education','social_links','certificates'] loop
     execute format('create policy "publik baca terpublikasi" on %I for select using (published)', t);
   end loop;
 end $$;

@@ -20,3 +20,6 @@ Buka `alamat-kamu.vercel.app/admin/login`, masuk, lalu edit lewat menu di kiri. 
 
 ## Menjalankan di komputer (opsional)
 Salin `.env.example` menjadi `.env`, lalu `npm install` dan `npm run dev`.
+
+## Update versi 2
+Kalau database sudah dibuat dengan `schema.sql` versi awal, jalankan `update-2.sql` sekali di SQL Editor (menambah menu Certificates dan pengaturan warna). Instalasi baru cukup memakai `schema.sql`.

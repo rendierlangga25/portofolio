@@ -12,3 +12,4 @@ export const Projects=()=><Page t="Projects"><Manager table="projects" title="Pr
 export const Education=()=><Page t="Education"><Manager table="education" title="Pendidikan" fields={F.education} publishable primary="institution" sub="degree" thumb="logo_url"/></Page>
 export const Social=()=><Page t="Social Links"><Manager table="social_links" title="Link sosial" fields={F.social} publishable primary="platform" sub="url"/></Page>
 export const Skills=()=><Page t="Skills"><Manager table="skill_categories" title="Kategori skill" fields={F.category} primary="name"/><Manager table="skills" title="Skill" fields={F.skill} primary="name"/></Page>
+export const Certificates=()=><Page t="Certificates"><Manager table="certificates" title="Sertifikat" fields={F.certificate} publishable thumb="image_url" sub="issuer"/></Page>
