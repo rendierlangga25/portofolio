@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@theme{--font-sans:"DM Sans",system-ui,sans-serif;--font-display:"Sora","DM Sans",sans-serif}
+:root{--ac:#e2561b;--bg:#e9e8e4;--card:#ffffff;--tx:#111111;--dk:#111111;--dkt:#ffffff;--nv:rgba(255,255,255,.7);--nvt:var(--tx)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--font-sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+::selection{background:#111;color:#fff}
+button,select,summary,label[for],input[type=file],input[type=color]{cursor:pointer}
+button:disabled{cursor:not-allowed}
