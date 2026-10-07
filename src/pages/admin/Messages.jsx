@@ -2,9 +2,10 @@ import {useEffect,useState} from 'react'
 import {Trash2} from 'lucide-react'
 import {sb} from '../../lib/supabase'
 import {useToast} from '../../components/admin/Toast'
+import {useAccount} from '../../lib/account'
 export default function Messages(){
-  const toast=useToast(),[rows,setRows]=useState(null)
-  const load=async()=>{const {data,error}=await sb.from('contact_messages').select('*').order('created_at',{ascending:false});if(error)toast(error.message,'err');setRows(data||[])}
+  const toast=useToast(),{user}=useAccount(),[rows,setRows]=useState(null)
+  const load=async()=>{const {data,error}=await sb.from('contact_messages').select('*').eq('owner_id',user.id).order('created_at',{ascending:false});if(error)toast(error.message,'err');setRows(data||[])}
   useEffect(()=>{load()},[])
   const read=async r=>{await sb.from('contact_messages').update({is_read:!r.is_read}).eq('id',r.id);load()}
   const del=async r=>{if(!confirm('Hapus pesan ini?'))return;await sb.from('contact_messages').delete().eq('id',r.id);load()}

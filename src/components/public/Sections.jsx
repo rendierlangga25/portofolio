@@ -138,7 +138,8 @@ export function Contact({p,socials}){
   const [st,setSt]=useState('')
   const rows=[p.email&&['Email',p.email,'mailto:'+p.email,Mail],p.whatsapp&&['WhatsApp','+'+p.whatsapp.replace(/\D/g,''),'https://wa.me/'+p.whatsapp.replace(/\D/g,''),MessageCircle],...socials.map(s=>[s.platform,s.url.replace(/^https?:\/\/(www\.)?/,''),s.url,ICON[(s.platform||'').toLowerCase()]||ExternalLink])].filter(Boolean)
   const send=async e=>{e.preventDefault();const f=e.target,v=n=>f.elements[n].value.trim();if(v('hp'))return
-    setSt('Sending…');const {error}=await sb.from('contact_messages').insert({name:v('name'),email:v('email'),message:v('message')})
+    if(!p.owner_id){f.reset();return setSt('Ini hanya contoh, pesan tidak dikirim.')}
+    setSt('Sending…');const {error}=await sb.from('contact_messages').insert({owner_id:p.owner_id,name:v('name'),email:v('email'),message:v('message')})
     if(error)return setSt('Failed to send. Please try again later.');f.reset();setSt('Thank you! Your message has been sent.')}
   const inp="w-full rounded-xl border border-[var(--dkt)]/15 bg-[var(--dkt)]/5 px-4 py-3 text-sm outline-none transition placeholder:text-[var(--dkt)]/40 focus:border-[var(--dkt)]/50"
   return(

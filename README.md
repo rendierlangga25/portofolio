@@ -1,25 +1,34 @@
-# Portfolio Rendi Erlangga (React + Vite + Tailwind + Supabase)
+# FolioKu: Portofolio Online Berlangganan (React + Vite + Tailwind + Supabase)
 
-## 1. Siapkan database (Supabase)
-1. Buka Supabase > **SQL Editor** > **New query**.
-2. Salin seluruh isi `schema.sql`, tempel, lalu **Run**. Ini membuat tabel, keamanan (RLS), tempat foto, data awal, dan menjadikan `rendierlangga2508@gmail.com` sebagai admin.
-3. Pastikan akun itu sudah ada di **Authentication > Users** (sudah ada) dan pendaftaran umum sudah dimatikan.
-SQL hanya dijalankan sekali. Kalau muncul error "already exists", berarti sudah pernah dijalankan.
+- Landing page `/` (hero, contoh, harga, metode pembayaran, FAQ), `/demo` (contoh interaktif)
+- Daftar `/daftar`, masuk `/masuk`, lupa password `/reset`
+- Dashboard pelanggan `/app` (edit portofolio, langganan, riwayat bayar)
+- Portofolio publik tiap pelanggan: `/u/username`
+- Panel owner `/owner`: ringkasan, paket & harga, **pesanan (setujui/tolak)**, **metode pembayaran**, pelanggan, pengaturan landing
+- **Pembayaran manual tanpa payment gateway**: QRIS, e-wallet, transfer bank (akun diatur sendiri oleh owner)
 
-## 2. Upload ke GitHub
-Buat repo baru, lalu tarik SEMUA isi folder ini (termasuk folder `src`) ke GitHub. Jangan upload `node_modules` atau `dist`.
+## 1. Database (Supabase > SQL Editor), jalankan berurutan, masing-masing SEKALI
+1. `schema.sql` (hanya jika database masih kosong)
+2. `update-2.sql` (hanya jika belum pernah)
+3. `update-3-saas.sql`
+4. **`update-4-pembayaran-manual.sql`** (baru)
 
-## 3. Deploy di Vercel
-1. Add New > Project > pilih repo > Import.
-2. Buka **Environment Variables**, tambahkan dua variabel (nilainya ada di `.env.example`):
-   `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY`
-3. Klik **Deploy**.
+Authentication > Providers > Email: pastikan **Allow new users to sign up** AKTIF.
+Authentication > URL Configuration: isi Site URL dengan domain websitemu dan tambahkan `https://domainmu/**` di Redirect URLs.
 
-## 4. Mengubah isi website
-Buka `alamat-kamu.vercel.app/admin/login`, masuk, lalu edit lewat menu di kiri. Perubahan langsung tampil di website.
+## 2. Deploy (Vercel)
+Upload isi folder ke GitHub (tanpa node_modules/dist), import ke Vercel. Environment Variables yang dibutuhkan hanya:
+`VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY` (lihat `.env.example`). Tidak perlu key payment gateway apa pun.
 
-## Menjalankan di komputer (opsional)
-Salin `.env.example` menjadi `.env`, lalu `npm install` dan `npm run dev`.
+## 3. Mengatur pembayaran (login sebagai owner)
+1. **Owner > Metode Pembayaran**: ubah contoh yang ada atau tambah baru (QRIS, GoPay, DANA, BCA, dst). Isi nama, atas nama, nomor, upload gambar QRIS, petunjuk, lalu centang **Aktif**. Hanya yang aktif tampil ke pelanggan.
+2. **Owner > Paket & Harga**: atur harga dan lama aktif (kosong = Lifetime).
+3. **Owner > Pengaturan Landing**: isi WhatsApp/email bantuan dan perkiraan waktu verifikasi.
 
-## Update versi 2
-Kalau database sudah dibuat dengan `schema.sql` versi awal, jalankan `update-2.sql` sekali di SQL Editor (menambah menu Certificates dan pengaturan warna). Instalasi baru cukup memakai `schema.sql`.
+## 4. Alur pembayaran
+Pelanggan pilih paket > sistem membuat nominal unik (harga + 3 digit) > pelanggan bayar tepat nominal > upload bukti > pesanan masuk **Owner > Pesanan** (tab "Perlu dicek") > kamu cek uang masuk di aplikasi GoPay Merchant/mutasi bank > klik **Setujui** (langganan langsung aktif) atau **Tolak** (dengan alasan).
+Jangan menyetujui hanya dari gambar bukti. Selalu cocokkan dengan uang yang benar-benar masuk, karena bukti bisa dipalsukan.
+
+## Catatan
+- Kode Midtrans lama disimpan di folder `opsional-midtrans/` (tidak dipakai).
+- Templat Syarat/Privasi (`src/pages/landing/Legal.jsx`) bersifat umum. Sesuaikan, termasuk kebijakan refund.
