@@ -9,6 +9,7 @@ import MiniSite from './MiniSite'
 import { usePlans } from '../../lib/plans'
 import { useAccount } from '../../lib/account'
 import { waLink } from '../../lib/format'
+import { siteHost } from '../../lib/site'
 
 const V = { '--ac': '#e2561b', '--bg': '#f3f1ec', '--card': '#fff', '--tx': '#111', '--dk': '#111', '--dkt': '#fff' }
 
@@ -226,7 +227,7 @@ export default function Landing() {
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
             >
               <MiniSite
-                url={`${location.host}/u/nadia`}
+                url={`${siteHost()}/u/nadia`}
                 scale={1.15}
               />
             </motion.div>
@@ -346,7 +347,7 @@ export default function Landing() {
                       bg={bg}
                       name={n}
                       role={r}
-                      url={`${location.host}/u/${u}`}
+                      url={`${siteHost()}/u/${u}`}
                     />
                   </div>
 

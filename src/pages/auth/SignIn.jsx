@@ -1,16 +1,17 @@
 import {useState} from 'react'
-import {Link,Navigate,useNavigate,useSearchParams} from 'react-router-dom'
+import {Link,Navigate,useLocation,useNavigate,useSearchParams} from 'react-router-dom'
 import {sb} from '../../lib/supabase'
 import {useAccount} from '../../lib/account'
 import AuthShell,{btn,inp} from './AuthShell'
 import GoogleBtn from './GoogleBtn'
+import {siteUrl} from '../../lib/site'
 export default function SignIn(){
-  const nav=useNavigate(),[q]=useSearchParams(),plan=q.get('plan'),{user,loading}=useAccount()
+  const nav=useNavigate(),loc=useLocation(),[q]=useSearchParams(),plan=q.get('plan'),{user,loading}=useAccount()
   const next=q.get('next')||(plan?`/app/billing?plan=${encodeURIComponent(plan)}`:'/app')
-  const [mode,setMode]=useState('in'),[err,setErr]=useState(''),[msg,setMsg]=useState(''),[busy,setBusy]=useState(false)
+  const [mode,setMode]=useState('in'),[err,setErr]=useState(loc.state?.notice||''),[msg,setMsg]=useState(''),[busy,setBusy]=useState(false)
   if(!loading&&user)return <Navigate to={next} replace/>
   const go=async e=>{e.preventDefault();setBusy(true);setErr('');setMsg('');const f=e.target.elements,email=f.email.value.trim()
-    if(mode==='forgot'){const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+'/reset'});setBusy(false);return error?setErr(error.message):setMsg('Jika email terdaftar, tautan untuk mengatur ulang password sudah dikirim.')}
+    if(mode==='forgot'){const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:siteUrl()+'/reset'});setBusy(false);return error?setErr(error.message):setMsg('Jika email terdaftar, tautan untuk mengatur ulang password sudah dikirim.')}
     const {error}=await sb.auth.signInWithPassword({email,password:f.password.value});setBusy(false)
     if(error)return setErr(/invalid/i.test(error.message)?'Email atau password salah':/confirm/i.test(error.message)?'Email belum dikonfirmasi. Cek kotak masuk kamu.':error.message)
     nav(next)}

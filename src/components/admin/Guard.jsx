@@ -3,6 +3,7 @@ import {Navigate,useLocation} from 'react-router-dom'
 import {sb} from '../../lib/supabase'
 import {useAccount} from '../../lib/account'
 import AuthShell,{btn,inp} from '../../pages/auth/AuthShell'
+import UsernameField from '../../pages/auth/UsernameField'
 const Spin=()=><div className="grid min-h-screen place-items-center text-sm text-neutral-500">Memuat…</div>
 
 function Onboarding({user,refresh,signOut}){
@@ -14,7 +15,7 @@ function Onboarding({user,refresh,signOut}){
   return(<AuthShell title="Pilih username portofolio" sub="Username menjadi alamat portofoliomu dan tidak bisa sering diganti." foot={<button onClick={signOut} className="underline">Keluar</button>}>
     <form onSubmit={e=>{e.preventDefault();claim(un,name)}} className="space-y-3.5">
       <input className={inp} placeholder="Nama lengkap" required value={name} onChange={e=>setName(e.target.value)}/>
-      <div className="flex items-center overflow-hidden rounded-xl border border-black/15 bg-white focus-within:border-[#111]"><span className="select-none pl-4 text-sm text-black/40">{location.host}/u/</span><input className="w-full bg-transparent py-3 pr-4 text-sm outline-none" placeholder="username" required maxLength={30} value={un} onChange={e=>setUn(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g,''))}/></div>
+      <UsernameField value={un} onChange={e=>setUn(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g,''))}/>
       {err&&<p className="text-sm text-red-600">{err}</p>}
       <button disabled={busy} className={btn}>{busy?'Menyimpan…':'Lanjut'}</button></form></AuthShell>)
 }

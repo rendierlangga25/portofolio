@@ -11,14 +11,16 @@
 1. `schema.sql` (hanya jika database masih kosong)
 2. `update-2.sql` (hanya jika belum pernah)
 3. `update-3-saas.sql`
-4. **`update-4-pembayaran-manual.sql`** (baru)
+4. `update-4-pembayaran-manual.sql`
+5. **`update-5-balas-pesan-dan-ringkasan.sql`** (baru: balas pesan + grafik Ringkasan Owner)
 
 Authentication > Providers > Email: pastikan **Allow new users to sign up** AKTIF.
-Authentication > URL Configuration: isi Site URL dengan domain websitemu dan tambahkan `https://domainmu/**` di Redirect URLs.
+Authentication > URL Configuration: isi **Site URL** dengan domain websitemu (contoh `https://portofolio-vif8.vercel.app`) dan tambahkan `https://portofolio-vif8.vercel.app/**` di **Redirect URLs**. Jika tidak, link konfirmasi email akan mengarah ke `localhost:3000`.
 
 ## 2. Deploy (Vercel)
 Upload isi folder ke GitHub (tanpa node_modules/dist), import ke Vercel. Environment Variables yang dibutuhkan hanya:
 `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON_KEY` (lihat `.env.example`). Tidak perlu key payment gateway apa pun.
+Opsional: `VITE_SITE_URL` (mis. `https://domainmu.com`) untuk memaksa domain yang dipakai di link email; jika kosong otomatis memakai domain yang sedang dibuka.
 
 ## 3. Mengatur pembayaran (login sebagai owner)
 1. **Owner > Metode Pembayaran**: ubah contoh yang ada atau tambah baru (QRIS, GoPay, DANA, BCA, dst). Isi nama, atas nama, nomor, upload gambar QRIS, petunjuk, lalu centang **Aktif**. Hanya yang aktif tampil ke pelanggan.

@@ -4,6 +4,8 @@ import {sb} from '../../lib/supabase'
 import {useAccount} from '../../lib/account'
 import AuthShell,{btn,inp} from './AuthShell'
 import GoogleBtn from './GoogleBtn'
+import UsernameField from './UsernameField'
+import {siteUrl} from '../../lib/site'
 const OK=/^[a-z0-9][a-z0-9-]{2,29}$/
 export default function SignUp(){
   const nav=useNavigate(),[q]=useSearchParams(),plan=q.get('plan'),{user,loading}=useAccount()
@@ -17,15 +19,15 @@ export default function SignUp(){
     if(av===false)return setErr('Username sudah dipakai, coba yang lain')
     if(f.password.length<8)return setErr('Password minimal 8 karakter')
     setBusy(true)
-    const {data,error}=await sb.auth.signUp({email:f.email.trim(),password:f.password,options:{data:{full_name:f.name.trim(),username:f.username},emailRedirectTo:location.origin+next}})
+    const {data,error}=await sb.auth.signUp({email:f.email.trim(),password:f.password,options:{data:{full_name:f.name.trim(),username:f.username},emailRedirectTo:siteUrl()+next}})
     setBusy(false)
     if(error)return setErr(/registered|already/i.test(error.message)?'Email ini sudah terdaftar. Silakan masuk.':error.message)
     if(data.session)nav(next);else setDone(true)}
-  if(done)return <AuthShell title="Cek email kamu" sub={`Kami mengirim tautan konfirmasi ke ${f.email}. Klik tautan itu untuk mengaktifkan akun, lalu masuk.`}><Link to={plan?`/masuk?plan=${plan}`:'/masuk'} className={btn+' block text-center'}>Ke halaman masuk</Link></AuthShell>
+  if(done)return <AuthShell title="Cek email kamu" sub={`Kami mengirim tautan konfirmasi ke ${f.email}. Klik tautan itu untuk mengaktifkan akun. Tidak ada di kotak masuk? Periksa folder spam.`}><Link to={plan?`/masuk?plan=${plan}`:'/masuk'} className={btn+' block text-center'}>Ke halaman masuk</Link></AuthShell>
   return(<AuthShell title="Buat akun" sub="Daftar gratis, pilih paket setelahnya." foot={<>Sudah punya akun? <Link to={plan?`/masuk?plan=${plan}`:'/masuk'} className="font-semibold text-[#111] underline">Masuk</Link></>}>
     <form onSubmit={go} className="space-y-3.5">
       <input className={inp} placeholder="Nama lengkap" required value={f.name} onChange={e=>set('name',e.target.value)} autoComplete="name"/>
-      <div><div className="flex items-center overflow-hidden rounded-xl border border-black/15 bg-white focus-within:border-[#111]"><span className="select-none pl-4 text-sm text-black/40">{location.host}/u/</span><input className="w-full bg-transparent py-3 pr-4 text-sm outline-none" placeholder="username" required value={f.username} onChange={e=>set('username',e.target.value)} maxLength={30} autoComplete="off"/></div>
+      <div><UsernameField value={f.username} onChange={e=>set('username',e.target.value)}/>
         <p className={`mt-1.5 text-xs ${av===true?'text-emerald-600':av===false?'text-red-600':'text-black/45'}`}>{av===true?'Username tersedia':av===false?'Username sudah dipakai':'Ini akan menjadi alamat portofoliomu.'}</p></div>
       <input className={inp} type="email" placeholder="Email" required value={f.email} onChange={e=>set('email',e.target.value)} autoComplete="email"/>
       <input className={inp} type="password" placeholder="Password (minimal 8 karakter)" required minLength={8} value={f.password} onChange={e=>set('password',e.target.value)} autoComplete="new-password"/>

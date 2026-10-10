@@ -1,4 +1,5 @@
-import {BrowserRouter,Routes,Route,Navigate} from 'react-router-dom'
+import {useEffect} from 'react'
+import {BrowserRouter,Routes,Route,Navigate,useNavigate} from 'react-router-dom'
 import Landing from './pages/landing/Landing.jsx'
 import Legal from './pages/landing/Legal.jsx'
 import SignIn from './pages/auth/SignIn.jsx'
@@ -14,8 +15,22 @@ import AppLayout from './layouts/AppLayout.jsx'
 import Guard,{OwnerGuard} from './components/admin/Guard.jsx'
 import {ToastProvider} from './components/admin/Toast.jsx'
 import {AccountProvider} from './lib/account.jsx'
+function AuthLinkNotice(){
+  const nav=useNavigate()
+  useEffect(()=>{
+    const h=new URLSearchParams(location.hash.replace(/^#/,''))
+    const code=h.get('error_code'),desc=h.get('error_description')
+    if(!code&&!desc)return
+    const msg=/expired|invalid/i.test(code+' '+desc)
+      ?'Tautan di email sudah kedaluwarsa atau pernah dipakai. Jika kamu sudah pernah mengkliknya, akunmu kemungkinan sudah aktif. Coba masuk dengan email dan password.'
+      :(desc||'Tautan email tidak valid.').replace(/\+/g,' ')
+    history.replaceState(null,'',location.pathname+location.search)
+    nav('/masuk',{replace:true,state:{notice:msg}})
+  },[])
+  return null
+}
 export default function App(){return(
-<BrowserRouter><AccountProvider><ToastProvider><Routes>
+<BrowserRouter><AuthLinkNotice/><AccountProvider><ToastProvider><Routes>
 <Route path="/" element={<Landing/>}/>
 <Route path="/masuk" element={<SignIn/>}/><Route path="/daftar" element={<SignUp/>}/><Route path="/reset" element={<Reset/>}/>
 <Route path="/syarat" element={<Legal kind="syarat"/>}/><Route path="/privasi" element={<Legal kind="privasi"/>}/>

@@ -4,11 +4,12 @@ import {Check,Copy,ExternalLink} from 'lucide-react'
 import {sb} from '../../lib/supabase'
 import {useAccount} from '../../lib/account'
 import {daysLeft,dt} from '../../lib/format'
+import {siteUrl} from '../../lib/site'
 export default function Dashboard(){
   const {user,profile,sub,access}=useAccount(),uid=user.id,[c,setC]=useState(null),[cp,setCp]=useState(false)
   const cnt=(t,f)=>{let q=sb.from(t).select('*',{count:'exact',head:true}).eq('owner_id',uid);if(f)q=q.eq(f[0],f[1]);return q.then(r=>r.count??0)}
   useEffect(()=>{Promise.all([cnt('projects'),cnt('projects',['published',true]),cnt('experiences'),cnt('skills'),cnt('contact_messages'),cnt('contact_messages',['is_read',false])]).then(setC)},[])
-  const url=`${location.origin}/u/${profile.username}`
+  const url=`${siteUrl()}/u/${profile.username}`
   const cards=c?[['Total proyek',c[0]],['Proyek terpublikasi',c[1]],['Pengalaman',c[2]],['Skill',c[3]],['Pesan masuk',c[4]],['Belum dibaca',c[5]]]:[]
   const status=sub?.is_lifetime?'Lifetime':sub?.expires_at&&access?`Aktif sampai ${dt(sub.expires_at)} (${daysLeft(sub.expires_at)} hari lagi)`:sub?`Berakhir ${dt(sub.expires_at)}`:access?'Akses owner':'Belum aktif'
   return(<div><h1 className="font-display mb-6 text-2xl font-semibold">Halo, {profile.name||'Selamat datang'} 👋</h1>

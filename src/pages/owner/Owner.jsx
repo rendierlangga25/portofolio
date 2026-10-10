@@ -7,13 +7,7 @@ import {dt,rp,dur} from '../../lib/format'
 const Page=({t,children})=><div><h1 className="font-display mb-6 text-2xl font-semibold">{t}</h1><div className="space-y-6">{children}</div></div>
 const Tag=({s})=>{const m={paid:'bg-emerald-50 text-emerald-700',pending:'bg-amber-50 text-amber-700',review:'bg-blue-50 text-blue-700',rejected:'bg-red-50 text-red-700'};return <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${m[s]||'bg-neutral-100 text-neutral-600'}`}>{s}</span>}
 
-export function Overview(){
-  const [s,setS]=useState(null),[o,setO]=useState([]),toast=useToast()
-  useEffect(()=>{sb.rpc('admin_stats').then(({data,error})=>error?toast(error.message+' (jalankan update-3-saas.sql)','err'):setS(data));sb.from('orders').select('*').order('created_at',{ascending:false}).limit(8).then(r=>setO(r.data||[]))},[])
-  const cards=s?[['Perlu diverifikasi',s.to_review],['Pendapatan total',rp(s.revenue)],['30 hari terakhir',rp(s.revenue_30d)],['Pesanan lunas',s.orders_paid],['Langganan aktif',s.active],['Total pengguna',s.users]]:[]
-  return(<Page t="Ringkasan">{!s?<p className="text-sm text-neutral-500">Memuat…</p>:<div className="grid grid-cols-2 gap-4 lg:grid-cols-3">{cards.map(([l,n])=><div key={l} className="rounded-xl border bg-white p-5"><p className="font-display text-2xl font-semibold">{n}</p><p className="mt-1 text-sm text-neutral-500">{l}</p></div>)}</div>}
-    <div><h2 className="mb-3 font-semibold">Pesanan terbaru</h2><div className="divide-y rounded-xl border bg-white">{o.length===0?<p className="p-6 text-center text-sm text-neutral-500">Belum ada pesanan.</p>:o.map(r=><div key={r.id} className="flex items-center justify-between gap-3 p-3 text-sm"><span className="min-w-0 truncate">{r.plan_name} · {rp(r.amount)}<span className="ml-2 text-xs text-neutral-400">{dt(r.created_at)}</span></span><Tag s={r.status}/></div>)}</div></div></Page>)
-}
+export {default as Overview} from './Overview'
 export const Plans=()=><Page t="Paket & Harga"><p className="-mt-3 text-sm text-neutral-500">Atur nama, lama aktif, dan harga paket di sini. Perubahan langsung tampil di landing page dan halaman langganan. Kosongkan "Lama aktif" untuk paket Lifetime.</p>
   <Manager owned={false} table="plans" title="Paket" fields={F.plan} primary="name" sub={r=>`${rp(r.price)} · ${dur(r)}${r.active?'':' · NONAKTIF'}`}/></Page>
 export const Methods=()=><Page t="Metode Pembayaran"><p className="-mt-3 text-sm text-neutral-500">Tambah akun QRIS, e-wallet, dan bank milikmu. Yang <b>Aktif</b> akan tampil di halaman pembayaran pelanggan dan di landing page. Untuk QRIS, upload gambar QRIS dari aplikasi GoPay Merchant atau bank kamu.</p><Manager owned={false} table="payment_methods" title="Metode" fields={F.paymethod} primary="label" thumb="image_url" sub={r=>`${{qris:'QRIS',ewallet:'E-Wallet',bank:'Bank'}[r.type]||r.type}${r.account_number?' · '+r.account_number:''}${r.active?'':' · NONAKTIF'}`}/></Page>
